@@ -1,6 +1,6 @@
 [project]
 name = "vercel-functions-cache"
-version = "0.2.2"
+version = "0.2.3"
 authors = [
     { name = "AlphaKR93", email = "dev@alpha93.kr" }
 ]

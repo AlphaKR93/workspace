@@ -2,6 +2,11 @@
 
 ## 0.1
 
+### 0.1.3
+
+**Runtime Cache:**
+- Fixed more runtime type issues
+
 ### 0.1.2
 
 **Runtime Cache:**

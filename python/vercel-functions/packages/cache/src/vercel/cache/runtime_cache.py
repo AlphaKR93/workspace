@@ -74,14 +74,14 @@ class AsyncRuntimeCache(AsyncCache):
     def __init__(
         self,
         *,
-        key_hash_function: Callable[[str], str] | None = None,
+        key_hash_function: "Callable[[str], str] | None" = None,
         namespace: str | None = None,
         separator: str | None = None,
     ) -> None:
         self._make_key = create_key_transformer(key_hash_function, namespace, separator)
 
     @override
-    async def get(self, key: str, /) -> Any | None:
+    async def get(self, key: str, /) -> "Any | None":
         return await _resolve_cache(False).get(self._make_key(key))
 
     @override
@@ -132,11 +132,13 @@ def _get_impl(sync: bool = True, /) -> Cache | AsyncCache:
     if sync:
         if _build_cache_instance is None:
             from .cache_build import BuildCache
+
             _build_cache_instance = BuildCache(endpoint, parsed_headers)
         return _build_cache_instance
     else:
         if _async_build_cache_instance is None:
             from .aio import AsyncBuildCache
+
             _async_build_cache_instance = AsyncBuildCache(endpoint, parsed_headers)
         return _async_build_cache_instance
 
