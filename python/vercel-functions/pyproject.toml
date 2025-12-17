@@ -1,6 +1,6 @@
 [project]
 name = "vercel-functions"
-version = "0.1.1"
+version = "0.1.2"
 authors = [
     { name = "AlphaKR93", email = "dev@alpha93.kr" }
 ]
@@ -15,7 +15,7 @@ classifiers = [
 
     "Topic :: Software Development :: Libraries",
     "Topic :: Software Development :: Libraries :: Python Modules",
-    
+
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3 :: Only",

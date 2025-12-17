@@ -1,6 +1,6 @@
 [project]
 name = "vercel-functions-cache"
-version = "0.2.1"
+version = "0.2.2"
 authors = [
     { name = "AlphaKR93", email = "dev@alpha93.kr" }
 ]
@@ -21,6 +21,10 @@ build-backend = "uv_build"
 [tool.uv.build-backend]
 module-name = "vercel"
 namespace = true
+
+[tool.basedpyright]
+reportAny = false
+reportExplicitAny = false
 
 [tool.ruff]
 line-length = 120

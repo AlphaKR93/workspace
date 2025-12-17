@@ -1,22 +1,25 @@
 from contextvars import ContextVar
 from dataclasses import dataclass
-from typing import Awaitable, Callable, Mapping
+from typing import TYPE_CHECKING
 
-from .types import PurgeAPI
+if TYPE_CHECKING:
+    from collections.abc import Awaitable, Callable, Mapping
+
+    from .types import AsyncCache, Cache, PurgeAPI
 
 
-_cv_wait_until: ContextVar[Callable[[Awaitable[object]], None] | None] = ContextVar("vercel_wait_until", default=None)
-_cv_cache: ContextVar[object | None] = ContextVar("vercel_cache", default=None)
-_cv_purge: ContextVar[PurgeAPI | None] = ContextVar("vercel_purge", default=None)
-_cv_headers: ContextVar[Mapping[str, str] | None] = ContextVar("vercel_headers", default=None)
+_cv_wait_until: "ContextVar[Callable[[Awaitable[object]], None] | None]" = ContextVar("vercel_wait_until", default=None)
+_cv_cache: "ContextVar[AsyncCache | Cache | None]" = ContextVar("vercel_cache", default=None)
+_cv_purge: "ContextVar[PurgeAPI | None]" = ContextVar("vercel_purge", default=None)
+_cv_headers: "ContextVar[Mapping[str, str] | None]" = ContextVar("vercel_headers", default=None)
 
 
 @dataclass
 class _ContextSnapshot:
-    wait_until: Callable[[Awaitable[object]], None] | None
-    cache: object | None
-    purge: PurgeAPI | None
-    headers: Mapping[str, str] | None
+    wait_until: "Callable[[Awaitable[object]], None] | None"
+    cache: "AsyncCache | Cache | None"
+    purge: "PurgeAPI | None"
+    headers: "Mapping[str, str] | None"
 
 
 def get_context() -> _ContextSnapshot:
@@ -30,10 +33,10 @@ def get_context() -> _ContextSnapshot:
 
 def set_context(
     *,
-    wait_until: Callable[[Awaitable[object]], None] | None = None,
-    cache: object | None = None,
-    purge: PurgeAPI | None = None,
-    headers: Mapping[str, str] | None = None,
+    wait_until: "Callable[[Awaitable[object]], None] | None" = None,
+    cache: "AsyncCache | Cache | None" = None,
+    purge: "PurgeAPI | None" = None,
+    headers: "Mapping[str, str] | None" = None,
 ) -> None:
     if wait_until is not None:
         _cv_wait_until.set(wait_until)

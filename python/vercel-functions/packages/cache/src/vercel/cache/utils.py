@@ -1,20 +1,20 @@
-from typing import TYPE_CHECKING, Literal
+from typing import TYPE_CHECKING
 
 from .context import get_context
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Sequence
-    from typing import Any
+    from collections.abc import Callable, Iterable
+    from typing import Any, Literal
 
     HashFunction = Callable[[str], str]
     DefaultNamespaceSeparator = Literal["$"]
 
 
-def invalidate_by_tag(tag: str | list[str]) -> "Any":
+def invalidate_by_tag(tag: "str | Iterable[str]") -> "Any":
     return api.invalidate_by_tag(tag) if (api := get_context().purge) else None
 
 
-def dangerously_delete_by_tag(tag: str | Sequence[str], **kwargs) -> Any:
+def dangerously_delete_by_tag(tag: "str | Iterable[str]", **kwargs: "Any") -> "Any":
     return api.dangerously_delete_by_tag(tag, **kwargs) if (api := get_context().purge) else None
 
 
