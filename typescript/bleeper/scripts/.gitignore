@@ -1,0 +1,3 @@
+# No TypeScript files in scripts folder
+*.ts
+*.tsx
