@@ -1,4 +1,4 @@
-package kr.alpha93.dokdo
+package kr.alpha93.lyra
 
 /**
  * A property delegate that allows a non-nullable property to be initialised lazily.

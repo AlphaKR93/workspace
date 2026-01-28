@@ -1,42 +1,41 @@
-package kr.alpha93.dokdo.math.random
+package kr.alpha93.lyra.math.random
 
-import kr.alpha93.dokdo.tryExcept
+import kr.alpha93.lyra.tryExcept
+import java.security.NoSuchAlgorithmException
+import java.security.SecureRandom as JvmSecureRandom
 import kotlin.experimental.and
-import kotlin.random.Random
-import java.security.NoSuchAlgorithmException as NoAlgException
-import java.security.SecureRandom as CSPRNG
+
 
 /**
- * A simple implementation of [java.security.SecureRandom].
+ * Kotlin implementation of [java.security.SecureRandom].
  *
- * @constructor Creates a new secure random number generator.
+ * @constructor Constructs a secure random number generator (RNG) implementing the given random number algorithm.
  * @see java.security.SecureRandom
  */
-open class SecureRandom(private val actual: CSPRNG, seed: Long = 0L) : Random(), ExtendedRandom {
+public open class SecureRandom(private val actual: JvmSecureRandom) : ExtendedRandom() {
 
-    companion object {
+    public companion object {
 
         private const val FULL_BYTE: Byte = 0xFF.toByte()
 
         /**
-         * [kr.alpha93.dokdo.math.random.SecureRandom] object that was selected
+         * [SecureRandom] object that was selected
          * by using the algorithms/providers specified in the
          * `securerandom.strongAlgorithms` [java.security.Security] property.
          */
         @JvmStatic
-        val STRONG: SecureRandom = SecureRandom(tryExcept(NoAlgException::class) { CSPRNG.getInstanceStrong() } ?: CSPRNG())
+        public val STRONG: SecureRandom =
+            SecureRandom(tryExcept(NoSuchAlgorithmException::class) { JvmSecureRandom.getInstanceStrong() }
+                ?: JvmSecureRandom())
 
     }
 
-    init {
-        actual.setSeed(seed)
-    }
+    public constructor() : this(tryExcept(NoSuchAlgorithmException::class) { JvmSecureRandom.getInstanceStrong() } ?: JvmSecureRandom())
 
-    constructor(seed: Long = 0L) : this(tryExcept(NoAlgException::class) { CSPRNG.getInstanceStrong() } ?: CSPRNG(), seed)
-
-    constructor(algorithm: String, seed: Long = 0L) : this(CSPRNG.getInstance(algorithm), seed)
+    public constructor(algorithm: String) : this(JvmSecureRandom.getInstance(algorithm))
 
     final override fun nextBits(bitCount: Int): Int {
+        // Copied from java.security.SecureRandom.next(int)
         if (bitCount == 0) return 0
 
         val byteCount = (bitCount + 7) / 8
@@ -49,48 +48,22 @@ open class SecureRandom(private val actual: CSPRNG, seed: Long = 0L) : Random(),
     }
 
     override fun nextInt(): Int = actual.nextInt()
-
     override fun nextInt(until: Int): Int = actual.nextInt(until)
-
     override fun nextInt(from: Int, until: Int): Int = actual.nextInt(from, until)
-
     override fun nextLong(): Long = actual.nextLong()
-
     override fun nextLong(until: Long): Long = actual.nextLong(until)
-
     override fun nextLong(from: Long, until: Long): Long = actual.nextLong(from, until)
-
     override fun nextBoolean(): Boolean = actual.nextBoolean()
-
     override fun nextDouble(): Double = actual.nextDouble()
-
     override fun nextDouble(until: Double): Double = actual.nextDouble(until)
-
     override fun nextDouble(from: Double, until: Double): Double = actual.nextDouble(from, until)
-
     override fun nextFloat(): Float = actual.nextFloat()
-
     override fun nextFloat(until: Float): Float = actual.nextFloat(until)
-
     override fun nextFloat(from: Float, until: Float): Float = actual.nextFloat(from, until)
-
-    override fun nextGaussian(): Double = actual.nextGaussian()
-
-    override fun nextGaussian(mean: Double, stddev: Double) = actual.nextGaussian(mean, stddev)
+    override fun nextBytes(array: ByteArray): ByteArray = array.apply(actual::nextBytes)
 
     override fun nextExponential(): Double = actual.nextExponential()
-
-    override fun nextBytes(array: ByteArray, fromIndex: Int, toIndex: Int): ByteArray =
-        nextBytes(array).copyOfRange(fromIndex, toIndex)
-
-    override fun nextBytes(array: ByteArray): ByteArray = array.apply { actual.nextBytes(this) }
-
-    override fun nextBytes(size: Int): ByteArray = nextBytes(ByteArray(size))
-
-    override fun equals(other: Any?): Boolean = other is SecureRandom && (this === other || actual == other.actual)
-
-    override fun hashCode(): Int = actual.hashCode()
-
-    override fun toString(): String = actual.toString()
+    override fun nextGaussian(): Double = actual.nextGaussian()
+    override fun nextGaussian(mean: Double, stdDev: Double): Double = actual.nextGaussian(mean, stdDev)
 
 }

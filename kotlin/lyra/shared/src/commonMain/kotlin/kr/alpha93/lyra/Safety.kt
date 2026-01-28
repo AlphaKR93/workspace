@@ -10,12 +10,14 @@ import kotlin.reflect.KClass
  * @param T The throwable which is ignored
  * @param R The type of return
  * @param orElse The fallback value.
+ * @param throwable Throwable class to catch
  * @param block Actual code to run.
  */
 @InlineOnly
 public inline fun <reified T : Throwable, R> tryExcept(
+    throwable: KClass<T> = T::class,
     orElse: R? = null,
-    block: () -> R
+    block: () -> R,
 ): R? {
     try {
         return block()
@@ -33,10 +35,12 @@ public inline fun <reified T : Throwable, R> tryExcept(
  * @param R The type of return
  * @param V The type of receiver
  * @param orElse The fallback value.
+ * @param throwable The KClass of the throwable
  * @param block Actual code to run.
  */
 @InlineOnly
 public inline fun <reified T : Throwable, R, V> V.attempt(
+    throwable: KClass<T> = T::class,
     orElse: R? = null,
-    block: V.() -> R
+    block: V.() -> R,
 ): R? = tryExcept<T, R>(orElse = orElse) { this.block() }

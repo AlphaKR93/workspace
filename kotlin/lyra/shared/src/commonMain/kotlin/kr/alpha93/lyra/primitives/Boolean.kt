@@ -1,4 +1,4 @@
-package kr.alpha93.dokdo.primitives
+package kr.alpha93.lyra.primitives
 
 /**
  * Binary representation of a number.

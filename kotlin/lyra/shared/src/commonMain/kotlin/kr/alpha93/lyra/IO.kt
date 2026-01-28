@@ -1,14 +1,5 @@
-package kr.alpha93.dokdo
+package kr.alpha93.lyra
 
-/**
- * The runtime object associated with the current Java application.
- * Most of the methods of class [Runtime] are instance methods and must be
- * invoked with respect to the current runtime object.
- *
- * @see Runtime.getRuntime
- */
-val RUNTIME: Runtime
-    get() = Runtime.getRuntime()
 
 /**
  * Returns the current time in milliseconds. Note that while the unit of time of
@@ -21,10 +12,8 @@ val RUNTIME: Runtime
  * coordinated universal time (UTC).
  *
  * @see NOW_NANOS
- * @see System.currentTimeMillis
  */
-val NOW: Long
-    get() = System.currentTimeMillis()
+public expect val NOW: Long
 
 /**
  * Returns the current value of the running Java Virtual Machine's
@@ -68,10 +57,8 @@ val NOW: Long
  * because of the possibility of numerical overflow.
  *
  * @see NOW
- * @see System.nanoTime
  */
-val NOW_NANOS: Long
-    get() = System.nanoTime()
+public expect val NOW_NANOS: Long
 
 /**
  * Runs the garbage collector in the Java Virtual Machine.
@@ -93,8 +80,5 @@ val NOW_NANOS: Long
  * ```
  * Runtime.getRuntime().gc()
  * ```
- *
- * @see java.lang.Runtime.gc
- * @see System.gc
  */
-fun gc() = RUNTIME.gc()
+public expect fun gc()

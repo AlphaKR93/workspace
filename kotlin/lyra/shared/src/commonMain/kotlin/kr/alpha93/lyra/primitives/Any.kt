@@ -1,4 +1,4 @@
-package kr.alpha93.dokdo.primitives
+package kr.alpha93.lyra.primitives
 
 /**
  * Returns a hash code value for the object.
@@ -14,8 +14,8 @@ package kr.alpha93.dokdo.primitives
  * @see hashCodeExact
  * @see Any.hashCode
  */
-val Any?.hashCode: Int
-    get() = this?.hashCode() ?: 0
+public val Any?.hashCode: Int
+    inline get() = this?.hashCode() ?: 0
 
 /**
  * Returns the same hash code for the given object as would be returned by the
@@ -23,15 +23,15 @@ val Any?.hashCode: Int
  *
  * @see hashCode
  */
-val Any?.hashCodeExact: Int
-    get() = System.identityHashCode(this)
+public expect val Any?.hashCodeExact: Int
 
 /**
  * Returns [Unit].
  *
  * @return [Unit]
  */
-fun Any?.join() = Unit
+@Suppress("UnusedReceiverParameter")
+public fun Any?.join(): Unit = Unit
 
 /**
  * Attempts to cast the object to the specified type.
@@ -39,13 +39,13 @@ fun Any?.join() = Unit
  * @return The cast object.
  * @throws ClassCastException If the object cannot be cast to the specified type.
  */
-@Suppress("UNCHECKED_CAST")
-fun <T> Any.cast(): T = this as T
+@Suppress("UNCHECKED_CAST", "NOTHING_TO_INLINE")
+public inline fun <T> Any.cast(): T = this as T
 
 /**
  * Attempts to cast the object safely to the specified type.
  *
  * @return The cast object. `null` if the object cannot be cast to the specified type.
  */
-@Suppress("UNCHECKED_CAST")
-fun <T> Any?.safeCast(): T? = this as? T
+@Suppress("UNCHECKED_CAST", "NOTHING_TO_INLINE")
+public inline fun <T> Any?.safeCast(): T? = this as? T

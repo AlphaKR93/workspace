@@ -1,11 +1,12 @@
-package kr.alpha93.dokdo.collections.inaccessible
+package kr.alpha93.lyra.inaccessible
+
 
 /**
  * Represents the map that should not be accessed
  *
  * @throws UnsupportedOperationException Attempted to access to the map
  */
-object InaccessibleMap : Map<Nothing, Nothing> {
+public object InaccessibleMap : Map<Nothing, Nothing> {
 
     override val size: Int
         get() = throw UnsupportedOperationException("This map should not be accessed")
@@ -28,7 +29,7 @@ object InaccessibleMap : Map<Nothing, Nothing> {
     override fun containsValue(value: Nothing): Boolean =
         throw UnsupportedOperationException("This map should not be accessed")
 
-    override fun get(key: Nothing): Nothing? =
+    override fun get(key: Nothing): Nothing =
         throw UnsupportedOperationException("This map should not be accessed")
 
 }

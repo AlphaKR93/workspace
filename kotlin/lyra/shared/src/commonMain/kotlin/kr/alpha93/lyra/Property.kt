@@ -1,6 +1,6 @@
-package kr.alpha93.dokdo
+package kr.alpha93.lyra
 
-import kr.alpha93.dokdo.primitives.toBooleanExact
+import kr.alpha93.lyra.primitives.toBooleanExact
 
 /**
  * Gets the system property indicated by the specified [key].
@@ -272,7 +272,7 @@ fun getShortExact(key: String, default: Short): Short =
  * @param key The name of the system property.
  * @return The [Int] value of the system property.
  * @see getIntExact
- * @see java.lang.Integer.getInteger
+ * @see Integer.getInteger
  */
 fun getInt(key: String): Int? =
     getString(key)?.attempt(NumberFormatException::class, null, String::toInt)
@@ -291,7 +291,7 @@ fun getInt(key: String): Int? =
  * @param default The default value of the system property.
  * @return The [Int] value of the system property.
  * @see getIntExact
- * @see java.lang.Integer.getInteger
+ * @see Integer.getInteger
  */
 fun getInt(key: String, default: Int): Int =
     getString(key)?.attempt(NumberFormatException::class, null, String::toInt) ?: default
@@ -309,7 +309,7 @@ fun getInt(key: String, default: Int): Int =
  * @param key The name of the system property.
  * @return The [Int] value of the system property.
  * @see getInt
- * @see java.lang.Integer.getInteger
+ * @see Integer.getInteger
  */
 fun getIntExact(key: String): Int? =
     getString(key)?.toInt()
@@ -329,7 +329,7 @@ fun getIntExact(key: String): Int? =
  * @param default The default value of the system property.
  * @return The [Int] value of the system property.
  * @see getInt
- * @see java.lang.Integer.getInteger
+ * @see Integer.getInteger
  */
 fun getIntExact(key: String, default: Int): Int =
     getString(key)?.toInt() ?: default
