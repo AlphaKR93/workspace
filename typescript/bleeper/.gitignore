@@ -1,8 +1,0 @@
-### Electron
-/node_modules/
-/dist/
-
-### IntelliJ Platform
-*.iml
-*.ipr
-*.iws
